@@ -1,5 +1,3 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 module.exports = async (req, res) => {
   // Handle CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,6 +13,15 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+    
+    // Better error handling
+    if (!stripeSecretKey) {
+      console.error('Missing STRIPE_SECRET_KEY environment variable');
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
+    
+    const stripe = require('stripe')(stripeSecretKey);
     const { priceId, successUrl, cancelUrl } = req.body;
     
     const session = await stripe.checkout.sessions.create({
