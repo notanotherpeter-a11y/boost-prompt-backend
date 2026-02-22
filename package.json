@@ -1,0 +1,8 @@
+{
+  "name": "boostprompt-stripe-backend",
+  "version": "1.0.0",
+  "description": "Stripe backend for BoostPrompt.dev",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}
